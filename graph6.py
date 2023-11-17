@@ -1,6 +1,6 @@
 import main
 import tkinter as tk
-import graph1, graph2, graph3, graph4, graph5
+#import graph1, graph2, graph3, graph4, graph5
 
 tk.set_appearance_mode("system")
 tk.set_default_color_theme("dark-blue")
