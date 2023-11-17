@@ -10,4 +10,3 @@ sns.relplot(
 )
 sns.barplot(main.df2.loc[:, ['State', 'Profit']], x="State", y="Profit", width=0.6)
 plt.xticks(rotation=90)
-plt.show()
