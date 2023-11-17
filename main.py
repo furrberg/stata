@@ -19,8 +19,8 @@ df4 = df2.copy(deep=True)
 df4.pe = df2['Profit']/df2['Sales']
 df4['Profitability ratio'] = df4.pe
 
-df4['Date'] = df4['Date'].astype(str)
 df4date = df4.Date.replace({'00:00:00':''}, regex=True)
 df4 = df4.assign(Date=df4date)
-ddf = df4.Date.replace({'/':'.'}, regex=True)
+ddf = df4.Date.replace({'/01/':'.'}, regex=True)
 df4 = df4.assign(Date=ddf)
+df4['Date'] = df4['Date'].astype(float) #Переводимо дату у формат float

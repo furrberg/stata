@@ -23,3 +23,4 @@ main.groups2.sum(numeric_only=True)
 main.groups3['Profit'].mean()
 
 print(main.df4)
+print(main.df4.dtypes)
