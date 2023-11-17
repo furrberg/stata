@@ -37,7 +37,7 @@ def graph8f(x):
 frame = tk.Frame(master=root)
 frame.pack(pady=20, padx=60, fill="both", expand=True)
 
-label = tk.Label(master=frame, text="Stat project", text_font=("Roboto", 24))
+label = tk.Label(master=frame, text="Stat project")
 label.pack(pady=12, padx=10)
 
 entry1 = tk.Entry(master=frame, placeholder_text="Username")
