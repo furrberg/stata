@@ -1,5 +1,5 @@
 import main
-import customtkinter as tk
+import tkinter as tk
 import graph1, graph2, graph3, graph4, graph5
 
 tk.set_appearance_mode("system")
