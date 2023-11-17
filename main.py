@@ -24,3 +24,16 @@ df4 = df4.assign(Date=df4date)
 ddf = df4.Date.replace({'/01/':'.'}, regex=True)
 df4 = df4.assign(Date=ddf)
 df4['Date'] = df4['Date'].astype(float) #Переводимо дату у формат float
+
+dataplot = sns.heatmap(df2.corr(numeric_only = True), cmap="YlGnBu", annot=True)#візуалізація кореляції
+
+df2expenses1 = df2.loc[:, ['State', 'Sales', 'COGS', 'Total Expenses']]
+df2expenses1['All Expenses'] = df2expenses1['COGS'].values + df2expenses1['Total Expenses'].values#суцільні витрати на виробництво і продаж продукту
+
+df2expenses2 = df2.loc[:, ['State', 'Sales', 'COGS', 'Total Expenses']]
+df2expenses2['Sales'] = df2['Sales'].copy(deep=True)
+df2expenses2['Profitability'] = df2expenses2['Sales'].values/df2expenses2['All Expenses'].values#профітабільність
+
+df2expenses3 = df2.loc[:, ['State', 'Sales', 'COGS', 'Total Expenses']]
+df2expenses3['Sales'] = df2['Sales'].copy(deep=True)
+df2expenses3['Profitability ratio'] = df2expenses3['Profit'].values/df2expenses3['Sales'].values#для графіку профіт/сейлс(норма додаткової вартості)
