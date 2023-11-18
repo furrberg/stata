@@ -19,12 +19,6 @@ df4 = df2.copy(deep=True)
 df4.pe = df2['Profit']/df2['Sales']
 df4['Profitability ratio'] = df4.pe
 
-df4date = df4.Date.replace({'00:00:00':''}, regex=True)
-df4 = df4.assign(Date=df4date)
-ddf = df4.Date.replace({'/01/':'.'}, regex=True)
-df4 = df4.assign(Date=ddf)
-df4['Date'] = df4['Date'].astype(float) #Переводимо дату у формат float
-
 df2expenses1 = df2.loc[:, ['State', 'Sales', 'COGS', 'Total Expenses']]
 df2expenses1['All Expenses'] = df2expenses1['COGS'].values + df2expenses1['Total Expenses'].values#суцільні витрати на виробництво і продаж продукту
 
@@ -35,3 +29,29 @@ df2expenses2['Profitability'] = df2expenses2['Sales'].values/df2expenses1['All E
 df2expenses3 = df2.loc[:, ['State', 'Sales', 'COGS', 'Total Expenses', 'Profit']]
 df2expenses3['Sales'] = df2['Sales'].copy(deep=True)
 df2expenses3['Profitability ratio'] = df2expenses3['Profit'].values/df2expenses3['Sales'].values#для графіку профіт/сейлс(норма додаткової вартості)
+
+df4date = df4.Date.replace({'00:00:00':''}, regex=True)
+df4 = df4.assign(Date=df4date)
+ddf = df4.Date.replace({'/':'.'}, regex=True)
+df4 = df4.assign(Date=ddf)
+df4line = df4.loc[:, ['State', 'Sales', 'Date' ]]
+dflinegrouped = pd.pivot_table(df4line,
+                               index='Date',
+                               columns='State',
+                               values='Sales',
+                               aggfunc='sum')
+dflinegrouped['Total Sales']=dflinegrouped.sum(axis=1).values
+dflinegrouped = dflinegrouped.sort_values('Total Sales', ascending=False)
+dflinegrouped2 = dflinegrouped.nlargest(24, 'Total Sales')
+dflinegrouped2 = dflinegrouped2.rename(columns = {'index':'Date',
+                                                  'Total Sales':'Total Sales'})
+dflinegrouped2 = dflinegrouped2.reset_index()
+try:
+    dflinegrouped2['Date'] = pd.to_datetime(dflinegrouped2['Date'], format='%m.%d.%y ')
+except ValueError as e:
+    print(f"Error: {e}")
+    print("Problematic dates:")
+    problematic_dates = dflinegrouped2.loc[pd.to_datetime(dflinegrouped2['Date'], errors='coerce').isna(), 'Date']
+    print(problematic_dates)
+dflinegrouped2['YearMonth'] = dflinegrouped2['Date']
+dflinegrouped2 = dflinegrouped2.sort_values(['YearMonth', 'Date'])
