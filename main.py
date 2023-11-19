@@ -30,6 +30,8 @@ df2expenses3 = df2.loc[:, ['State', 'Sales', 'COGS', 'Total Expenses', 'Profit']
 df2expenses3['Sales'] = df2['Sales'].copy(deep=True)
 df2expenses3['Profitability ratio'] = df2expenses3['Profit'].values/df2expenses3['Sales'].values#для графіку профіт/сейлс(норма додаткової вартості)
 
+product = df2.loc[:, ['Product', 'Product Type', 'State', 'Sales']]#для barplot з продуктами
+
 df4date = df4.Date.replace({'00:00:00':''}, regex=True)
 df4 = df4.assign(Date=df4date)
 ddf = df4.Date.replace({'/':'.'}, regex=True)
