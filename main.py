@@ -32,7 +32,7 @@ df2expenses3['Profitability ratio'] = df2expenses3['Profit'].values/df2expenses3
 
 product = df2.loc[:, ['Product', 'Product Type', 'State', 'Sales']]#для barplot з продуктами
 
-df4date = df4.Date.replace({'00:00:00':''}, regex=True)
+df4date = df4.Date.replace({'00:00:00':''}, regex=True) #звідси до кінця код для лінійного графіку(у graph7line.py)
 df4 = df4.assign(Date=df4date)
 ddf = df4.Date.replace({'/':'.'}, regex=True)
 df4 = df4.assign(Date=ddf)
